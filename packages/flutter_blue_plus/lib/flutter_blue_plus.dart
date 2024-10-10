@@ -10,7 +10,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus_platform_interface/flutter_blue_plus_platform_interface.dart';
 
-export 'package:flutter_blue_plus_platform_interface/flutter_blue_plus_platform_interface.dart' show DeviceIdentifier, Guid, LogLevel, PhySupport;
+export 'package:flutter_blue_plus_platform_interface/flutter_blue_plus_platform_interface.dart'
+    show DeviceIdentifier, Guid, LogLevel, PhySupport;
+import 'package:flutter/services.dart';
 
 part 'src/bluetooth_characteristic.dart';
 part 'src/bluetooth_descriptor.dart';

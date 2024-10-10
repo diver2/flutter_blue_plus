@@ -486,6 +486,41 @@ public class FlutterBluePlusPlugin implements
                     break;
                 }
 
+                /// EMILIO ADDED THIS
+                case "getPermissions":
+                {
+                  ArrayList<String> permissions = new ArrayList<>();
+
+                    if (Build.VERSION.SDK_INT >= 31) { // Android 12 (October 2021)
+                        permissions.add(Manifest.permission.BLUETOOTH_SCAN);
+                        
+                        /// EMILIO COMMENTED THIS OUT
+                        // if (androidUsesFineLocation) {
+                        //     permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                        // }
+
+
+                        // it is unclear why this is needed, but some phones throw a
+                        // SecurityException AdapterService getRemoteName, without it
+                        permissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+                    }
+
+                    if (Build.VERSION.SDK_INT <= 30) { // Android 11 (September 2020)
+                        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                    }
+
+                    ensurePermissions(permissions, (granted, perm) -> {
+                        if (granted == false) {
+                            result.error("startScan", 
+                                String.format("FlutterBluePlus requires %s permission", perm), null);
+                                
+                            return;
+                        }
+                        result.success(true);
+                    });
+                    break;
+                }
+
                 case "startScan":
                 {
                     // see: BmScanSettings
@@ -1582,8 +1617,10 @@ public class FlutterBluePlusPlugin implements
             operation.op(true, null);
             return;
         }
+        System.out.println("permissionsNeeded is not empty" + permissionsNeeded);
 
         askPermission(permissionsNeeded, operation);
+        
     }
 
     private void askPermission(List<String> permissionsNeeded, OperationOnPermission operation) {
@@ -1591,6 +1628,7 @@ public class FlutterBluePlusPlugin implements
             operation.op(true, null);
             return;
         }
+        System.out.println("requestPermissions " + lastEventId);
 
         // Store the operation with the current request code
         operationsOnPermission.put(lastEventId, operation);
@@ -1599,8 +1637,13 @@ public class FlutterBluePlusPlugin implements
                 activityBinding.getActivity(),
                 permissionsNeeded.toArray(new String[0]),
                 lastEventId);
+        System.out.println("requestPermissions DONE " + lastEventId);
+
 
         lastEventId++;
+        /// EMILIO CHANGES - THIS IS THE MAGIC
+        operation.op(true, null);
+        return;
     }
 
     // Check if Android location services are enabled
