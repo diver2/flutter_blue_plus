@@ -250,10 +250,9 @@ class _NewStreamWithInitialValueTransformer<T> extends StreamTransformerBase<T, 
   }
 
   Stream<T> _bind(Stream<T> stream, {bool broadcast = false}) {
-
     /////////////////////////////////////////
     /// Original Stream Subscription Callbacks
-    /// 
+    ///
 
     /// When the original stream emits data, forward it to our new stream
     void onData(T data) {
@@ -291,22 +290,22 @@ class _NewStreamWithInitialValueTransformer<T> extends StreamTransformerBase<T, 
 
     //////////////////////////////////////
     ///  New Stream Controller Callbacks
-    /// 
+    ///
 
     /// (Single Subscription Only) When a client pauses
-    /// the new stream, pause the original stream 
+    /// the new stream, pause the original stream
     void onPause() {
       subscription.pause();
     }
 
     /// (Single Subscription Only) When a client resumes
-    /// the new stream, resume the original stream 
+    /// the new stream, resume the original stream
     void onResume() {
       subscription.resume();
     }
 
-    /// Called when a client cancels their 
-    /// subscription to the new stream, 
+    /// Called when a client cancels their
+    /// subscription to the new stream,
     void onCancel() {
       // count listeners of the new stream
       listenerCount--;
@@ -322,7 +321,7 @@ class _NewStreamWithInitialValueTransformer<T> extends StreamTransformerBase<T, 
 
     //////////////////////////////////////
     /// Return New Stream
-    /// 
+    ///
 
     // create a new stream controller
     if (broadcast) {
@@ -417,6 +416,10 @@ class _MutexFactory {
   static _Mutex getMutexForKey(String key) {
     _all[key] ??= _Mutex();
     return _all[key]!;
+  }
+
+  static void reset() {
+    _all.clear();
   }
 }
 

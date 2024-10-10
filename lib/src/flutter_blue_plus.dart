@@ -143,6 +143,13 @@ class FlutterBluePlus {
     }
   }
 
+  /// Turn on Bluetooth (Android only),
+  static Future<void> init({int timeout = 60}) async {
+    await _initFlutterBluePlus();
+    _MutexFactory.reset();
+    return;
+  }
+
   /// Gets the current state of the Bluetooth module
   static Stream<BluetoothAdapterState> get adapterState async* {
     // get current state if needed
