@@ -259,6 +259,7 @@ class FlutterBluePlus {
     // startScan or stopScan at a time
     _Mutex mtx = _MutexFactory.getMutexForKey("scan");
     await mtx.take();
+    debugPrint("take mutex - startScan");
     try {
       // already scanning?
       if (_isScanning.latestValue == true) {
@@ -291,7 +292,10 @@ class FlutterBluePlus {
       _scanBuffer = _BufferStream.listen(responseStream);
 
       // invoke platform method
-      await _invokeMethod('startScan', settings.toMap()).onError((e, s) => _stopScan(invokePlatform: false));
+      await _invokeMethod('startScan', settings.toMap()).onError((e, s) {
+        debugPrint("startScan error: $e");
+        _stopScan(invokePlatform: false);
+      });
 
       // check every 250ms for gone devices?
       late Stream<BmScanResponse?> outputStream = removeIfGone != null
@@ -355,6 +359,25 @@ class FlutterBluePlus {
         _scanTimeout = Timer(timeout, stopScan);
       }
     } finally {
+      debugPrint("give back muter - startScan");
+      mtx.give();
+    }
+  }
+
+  /// EMILIO CHANGES
+  static Future<void> getPermissions() async {
+    // check args
+
+    // only allow a single task to call
+    // startScan or stopScan at a time
+    _Mutex mtx = _MutexFactory.getMutexForKey("permissions");
+    await mtx.take();
+    debugPrint("take mutex - getPermissions");
+    try {
+      // invoke platform method
+      await _invokeMethod('getPermissions');
+    } finally {
+      debugPrint("give back mutex - getPermissions");
       mtx.give();
     }
   }
