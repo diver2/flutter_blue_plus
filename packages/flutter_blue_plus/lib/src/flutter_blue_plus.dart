@@ -380,7 +380,8 @@ class FlutterBluePlus {
     debugPrint("take mutex - getPermissions");
     try {
       // invoke platform method
-      await _invokeMethod('getPermissions');
+
+      // await _invokeMethod('getPermissions');
     } finally {
       debugPrint("give back mutex - getPermissions");
       mtx.give();
