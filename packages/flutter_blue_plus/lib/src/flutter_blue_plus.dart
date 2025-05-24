@@ -145,6 +145,7 @@ class FlutterBluePlus {
   /// Turn on Bluetooth (Android only),
   static Future<void> init({int timeout = 60}) async {
     await _initFlutterBluePlus();
+    // EMILIO
     _MutexFactory.reset();
     return;
   }
