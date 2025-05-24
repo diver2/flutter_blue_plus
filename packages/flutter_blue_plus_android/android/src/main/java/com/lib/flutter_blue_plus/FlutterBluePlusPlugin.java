@@ -487,39 +487,39 @@ public class FlutterBluePlusPlugin implements
                 }
 
                 /// EMILIO ADDED THIS
-                case "getPermissions":
-                {
-                  ArrayList<String> permissions = new ArrayList<>();
+                // case "getPermissions":
+                // {
+                //   ArrayList<String> permissions = new ArrayList<>();
 
-                    if (Build.VERSION.SDK_INT >= 31) { // Android 12 (October 2021)
-                        permissions.add(Manifest.permission.BLUETOOTH_SCAN);
+                //     if (Build.VERSION.SDK_INT >= 31) { // Android 12 (October 2021)
+                //         permissions.add(Manifest.permission.BLUETOOTH_SCAN);
                         
-                        /// EMILIO COMMENTED THIS OUT
-                        // if (androidUsesFineLocation) {
-                        //     permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                        // }
+                //         /// EMILIO COMMENTED THIS OUT
+                //         // if (androidUsesFineLocation) {
+                //         //     permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                //         // }
 
 
-                        // it is unclear why this is needed, but some phones throw a
-                        // SecurityException AdapterService getRemoteName, without it
-                        permissions.add(Manifest.permission.BLUETOOTH_CONNECT);
-                    }
+                //         // it is unclear why this is needed, but some phones throw a
+                //         // SecurityException AdapterService getRemoteName, without it
+                //         permissions.add(Manifest.permission.BLUETOOTH_CONNECT);
+                //     }
 
-                    if (Build.VERSION.SDK_INT <= 30) { // Android 11 (September 2020)
-                        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                    }
+                //     if (Build.VERSION.SDK_INT <= 30) { // Android 11 (September 2020)
+                //         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                //     }
 
-                    ensurePermissions(permissions, (granted, perm) -> {
-                        if (granted == false) {
-                            result.error("startScan", 
-                                String.format("FlutterBluePlus requires %s permission", perm), null);
+                //     ensurePermissions(permissions, (granted, perm) -> {
+                //         if (granted == false) {
+                //             result.error("startScan", 
+                //                 String.format("FlutterBluePlus requires %s permission", perm), null);
                                 
-                            return;
-                        }
-                        result.success(true);
-                    });
-                    break;
-                }
+                //             return;
+                //         }
+                //         result.success(true);
+                //     });
+                //     break;
+                // }
 
                 case "startScan":
                 {

@@ -370,23 +370,23 @@ class FlutterBluePlus {
   }
 
   /// EMILIO CHANGES
-  static Future<void> getPermissions() async {
-    // check args
+  // static Future<void> getPermissions() async {
+  //   // check args
 
-    // only allow a single task to call
-    // startScan or stopScan at a time
-    _Mutex mtx = _MutexFactory.getMutexForKey("permissions");
-    await mtx.take();
-    debugPrint("take mutex - getPermissions");
-    try {
-      // invoke platform method
+  //   // only allow a single task to call
+  //   // startScan or stopScan at a time
+  //   _Mutex mtx = _MutexFactory.getMutexForKey("permissions");
+  //   await mtx.take();
+  //   debugPrint("take mutex - getPermissions");
+  //   try {
+  //     // invoke platform method
 
-      // await _invokeMethod('getPermissions');
-    } finally {
-      debugPrint("give back mutex - getPermissions");
-      mtx.give();
-    }
-  }
+  //     // await _invokeMethod('getPermissions');
+  //   } finally {
+  //     debugPrint("give back mutex - getPermissions");
+  //     mtx.give();
+  //   }
+  // }
 
   /// Stops a scan for Bluetooth Low Energy devices
   static Future<void> stopScan() async {
